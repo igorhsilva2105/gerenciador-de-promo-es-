@@ -7,7 +7,7 @@
   "scope": "/",
   "short_name": "Gerenciador-de-promoção",
   "start_url": "/",
-  "theme_color": "#eb2546",
+  "theme_color": "#f53e5c",
   "categories": [
     "finance"
   ],
@@ -18,5 +18,7 @@
     "minimal-ui",
     "window-controls-overlay",
     "browser"
-  ]
+  ],
+  "id": "Gerenciador-de-promoção",
+  "description": "Gerencie campanhas, margens e lucros com gráficos interativos."
 }
