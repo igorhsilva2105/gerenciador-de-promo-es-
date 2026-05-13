@@ -482,5 +482,10 @@
     "minimal-ui",
     "window-controls-overlay",
     "browser"
-  ]
+  ],
+  "prefer_related_applications": false,
+  "iarc_rating_id": "3+",
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
 }
