@@ -4,9 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#2563eb">
-  <title>Dashboard Ultimate Pro - Campanhas</title>
+  <meta name="description" content="Dashboard Pro para gestão de campanhas. Gerencie lucros, margens e métricas com gráficos interativos.">
   
-  <!-- Tailwind CSS para um design moderno estilo PWA -->
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Dashboard Pro">
+  
+  <title>Dashboard Pro - Campanhas</title>
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Chart.js -->
@@ -34,7 +42,6 @@
       background: #94a3b8;
     }
 
-    /* Switch Customizado */
     .toggle-checkbox:checked {
       right: 0;
       border-color: #2563eb;
@@ -55,11 +62,18 @@
       border-radius: 9999px;
       transition: all 0.2s ease;
     }
+
+    /* Melhorias para PWA */
+    @media (display-mode: standalone) {
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+    }
   </style>
 </head>
 <body class="text-slate-800 font-sans pb-10">
 
-  <!-- Header Estilo App -->
   <header class="bg-blue-600 text-white shadow-md sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-2">
@@ -69,7 +83,6 @@
           <p class="text-blue-200 text-xs font-medium">Gestão de Campanhas</p>
         </div>
       </div>
-      <!-- Botão de Configurações -->
       <button id="btnAbrirConfig" class="bg-blue-700 hover:bg-blue-800 p-2 rounded-full transition-colors flex items-center justify-center shadow-inner">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       </button>
@@ -77,219 +90,79 @@
   </header>
 
   <main class="max-w-7xl mx-auto px-4 mt-6 space-y-6">
-
-    <!-- Seção de Formulário (Cartão Principal) -->
-    <section id="secFormulario" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300">
+    <!-- Formulário -->
+    <section id="secFormulario" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <div class="bg-slate-50 px-5 py-4 border-b border-slate-200">
-        <h2 class="text-base font-semibold text-slate-800 flex items-center gap-2">
-          🏷️ Configurar Nova Campanha
-        </h2>
+        <h2 class="text-base font-semibold text-slate-800 flex items-center gap-2">🏷️ Configurar Nova Campanha</h2>
       </div>
-      
       <div class="p-5">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <!-- Inputs -->
           <div class="col-span-1 sm:col-span-2 lg:col-span-4">
             <label class="block text-sm font-medium text-slate-600 mb-1">Nome da campanha</label>
-            <input type="text" id="nomeCampanha" placeholder="Ex: Black Friday - Tech" value="Smart Banner"
-                   class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+            <input type="text" id="nomeCampanha" placeholder="Ex: Black Friday - Tech" value="Smart Banner" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
           </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">💰 Preço original (R$)</label>
-            <input type="number" id="precoOriginal" step="0.01" value="899.00"
-                   class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">🏷️ Preço promocional (R$)</label>
-            <input type="number" id="precoPromocional" step="0.01" value="698.40"
-                   class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">📉 Desconto (Auto)</label>
-            <input type="text" id="descontoDisplay" readonly disabled
-                   class="w-full rounded-lg border border-slate-200 bg-slate-100 text-slate-500 px-4 py-2.5 cursor-not-allowed">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">⚙️ Custo do produto (R$)</label>
-            <input type="number" id="custoProduto" step="0.01" value="504.00"
-                   class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">💸 Tarifa de venda (R$)</label>
-            <input type="number" id="tarifaVenda" step="0.01" value="55.22"
-                   class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">📦 Custo de envio (R$)</label>
-            <input type="number" id="custoEnvio" step="0.01" value="91.15"
-                   class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-          </div>
-          
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">⚠️ Margem mínima (%)</label>
-            <input type="number" id="margemMinima" step="0.5" value="14.0"
-                   class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-          </div>
+          <div><label class="block text-sm font-medium text-slate-600 mb-1">💰 Preço original (R$)</label><input type="number" id="precoOriginal" step="0.01" value="899.00" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"></div>
+          <div><label class="block text-sm font-medium text-slate-600 mb-1">🏷️ Preço promocional (R$)</label><input type="number" id="precoPromocional" step="0.01" value="698.40" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"></div>
+          <div><label class="block text-sm font-medium text-slate-600 mb-1">📉 Desconto (Auto)</label><input type="text" id="descontoDisplay" readonly disabled class="w-full rounded-lg border border-slate-200 bg-slate-100 text-slate-500 px-4 py-2.5 cursor-not-allowed"></div>
+          <div><label class="block text-sm font-medium text-slate-600 mb-1">⚙️ Custo do produto (R$)</label><input type="number" id="custoProduto" step="0.01" value="504.00" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"></div>
+          <div><label class="block text-sm font-medium text-slate-600 mb-1">💸 Tarifa de venda (R$)</label><input type="number" id="tarifaVenda" step="0.01" value="55.22" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"></div>
+          <div><label class="block text-sm font-medium text-slate-600 mb-1">📦 Custo de envio (R$)</label><input type="number" id="custoEnvio" step="0.01" value="91.15" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"></div>
+          <div><label class="block text-sm font-medium text-slate-600 mb-1">⚠️ Margem mínima (%)</label><input type="number" id="margemMinima" step="0.5" value="14.0" class="w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"></div>
         </div>
-
-        <!-- Botões de Ação Principal -->
         <div class="mt-6 flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100">
-          <button id="btnSalvar" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
-            ✅ Salvar Campanha
-          </button>
-          <button id="btnCancelar" style="display:none;" class="w-full sm:w-auto bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2">
-            ✖️ Cancelar Edição
-          </button>
+          <button id="btnSalvar" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">✅ Salvar Campanha</button>
+          <button id="btnCancelar" style="display:none;" class="w-full sm:w-auto bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2">✖️ Cancelar Edição</button>
         </div>
       </div>
-
-      <!-- Barra de Ferramentas / Importar Exportar -->
-      <div id="secFerramentas" class="bg-slate-50 p-4 border-t border-slate-200 flex flex-col lg:flex-row justify-between items-center gap-4 transition-all duration-300">
-        <button id="btnExportar" class="w-full lg:w-auto bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
-          📎 Exportar CSV
-        </button>
-        
+      <div id="secFerramentas" class="bg-slate-50 p-4 border-t border-slate-200 flex flex-col lg:flex-row justify-between items-center gap-4">
+        <button id="btnExportar" class="w-full lg:w-auto bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">📎 Exportar CSV</button>
         <div class="flex flex-col sm:flex-row items-center gap-2 w-full lg:w-auto">
-          <input type="file" id="importFile" accept=".csv" 
-                 class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-slate-200 rounded-lg bg-white cursor-pointer">
-          <button id="btnImportar" class="w-full sm:w-auto bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
-            📂 Importar CSV
-          </button>
+          <input type="file" id="importFile" accept=".csv" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-slate-200 rounded-lg bg-white cursor-pointer">
+          <button id="btnImportar" class="w-full sm:w-auto bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">📂 Importar CSV</button>
         </div>
       </div>
-      
-      <!-- Filtro -->
-      <div id="secFiltro" class="bg-indigo-50 p-4 border-t border-indigo-100 flex items-center gap-3 transition-all duration-300">
+      <div id="secFiltro" class="bg-indigo-50 p-4 border-t border-indigo-100 flex items-center gap-3">
         <input type="checkbox" id="filtroMargem" class="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500 cursor-pointer">
-        <label for="filtroMargem" class="text-sm font-medium text-indigo-900 cursor-pointer">
-          🔻 Mostrar apenas campanhas com margem abaixo de <span id="margemMinimaLabel" class="font-bold">14</span>%
-        </label>
+        <label for="filtroMargem" class="text-sm font-medium text-indigo-900 cursor-pointer">🔻 Mostrar apenas campanhas com margem abaixo de <span id="margemMinimaLabel" class="font-bold">14</span>%</label>
       </div>
     </section>
 
-    <!-- Resumo (Cards) -->
-    <section id="secResumo" class="grid grid-cols-1 sm:grid-cols-3 gap-4 transition-all duration-300">
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-center items-center text-center">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">💰 Lucro Total</span>
-        <div class="text-2xl sm:text-3xl font-black text-slate-800 mt-1" id="lucroTotal">R$ 0,00</div>
-      </div>
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-center items-center text-center">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">📊 Lucro Médio</span>
-        <div class="text-2xl sm:text-3xl font-black text-slate-800 mt-1" id="lucroMedio">R$ 0,00</div>
-      </div>
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-center items-center text-center">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">🏆 Melhor Campanha</span>
-        <div class="text-xl sm:text-2xl font-bold text-blue-600 mt-1 line-clamp-1" id="melhorCampanha">—</div>
-      </div>
+    <!-- Resumo -->
+    <section id="secResumo" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-center items-center text-center"><span class="text-xs font-bold text-slate-400 uppercase tracking-wider">💰 Lucro Total</span><div class="text-2xl sm:text-3xl font-black text-slate-800 mt-1" id="lucroTotal">R$ 0,00</div></div>
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-center items-center text-center"><span class="text-xs font-bold text-slate-400 uppercase tracking-wider">📊 Lucro Médio</span><div class="text-2xl sm:text-3xl font-black text-slate-800 mt-1" id="lucroMedio">R$ 0,00</div></div>
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col justify-center items-center text-center"><span class="text-xs font-bold text-slate-400 uppercase tracking-wider">🏆 Melhor Campanha</span><div class="text-xl sm:text-2xl font-bold text-blue-600 mt-1 line-clamp-1" id="melhorCampanha">—</div></div>
     </section>
 
-    <!-- Tabela de Campanhas -->
+    <!-- Tabela -->
     <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200">
-        <h2 class="text-base font-semibold text-slate-800 flex items-center gap-2">
-          📋 Lista de Campanhas
-        </h2>
-      </div>
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200"><h2 class="text-base font-semibold text-slate-800 flex items-center gap-2">📋 Lista de Campanhas</h2></div>
       <div class="table-container overflow-x-auto w-full">
         <table id="tabelaCampanhas" class="w-full text-sm text-left text-slate-600 min-w-[800px]">
-          <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
-            <tr>
-              <th class="px-4 py-3 font-semibold">Campanha</th>
-              <th class="px-4 py-3 font-semibold text-right">Preço Orig.</th>
-              <th class="px-4 py-3 font-semibold text-right">Preço Promo</th>
-              <th class="px-4 py-3 font-semibold text-center">Desconto</th>
-              <th class="px-4 py-3 font-semibold text-right">Você Recebe</th>
-              <th class="px-4 py-3 font-semibold text-right">Imposto 8%</th>
-              <th class="px-4 py-3 font-semibold text-right">Lucro Líquido</th>
-              <th class="px-4 py-3 font-semibold text-center">% Lucro</th>
-              <th class="px-4 py-3 font-semibold text-center">Ações</th>
-            </tr>
-          </thead>
-          <tbody id="tbodyCampanhas" class="divide-y divide-slate-100">
-            <!-- Renderizado via JS -->
-          </tbody>
+          <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200"><tr><th class="px-4 py-3 font-semibold">Campanha</th><th class="px-4 py-3 font-semibold text-right">Preço Orig.</th><th class="px-4 py-3 font-semibold text-right">Preço Promo</th><th class="px-4 py-3 font-semibold text-center">Desconto</th><th class="px-4 py-3 font-semibold text-right">Você Recebe</th><th class="px-4 py-3 font-semibold text-right">Imposto 8%</th><th class="px-4 py-3 font-semibold text-right">Lucro Líquido</th><th class="px-4 py-3 font-semibold text-center">% Lucro</th><th class="px-4 py-3 font-semibold text-center">Ações</th></tr></thead>
+          <tbody id="tbodyCampanhas" class="divide-y divide-slate-100"></tbody>
         </table>
       </div>
     </section>
 
     <!-- Gráficos -->
-    <section id="secGraficos" class="grid grid-cols-1 lg:grid-cols-2 gap-6 transition-all duration-300">
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">Lucro por Campanha</h3>
-        <div class="relative h-[250px] w-full">
-          <canvas id="lucroChart"></canvas>
-        </div>
-      </div>
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">Margem Percentual</h3>
-        <div class="relative h-[250px] w-full">
-          <canvas id="percentualChart"></canvas>
-        </div>
-      </div>
+    <section id="secGraficos" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4"><h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">Lucro por Campanha</h3><div class="relative h-[250px] w-full"><canvas id="lucroChart"></canvas></div></div>
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4"><h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">Margem Percentual</h3><div class="relative h-[250px] w-full"><canvas id="percentualChart"></canvas></div></div>
     </section>
   </main>
 
-  <!-- Modal de Configurações -->
-  <div id="modalConfig" class="fixed inset-0 bg-slate-900/40 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden transform transition-transform">
-      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center">
-        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">⚙️ Personalizar Tela</h2>
-        <button id="btnFecharConfig" class="text-slate-400 hover:text-slate-600 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+  <!-- Modal Configurações -->
+  <div id="modalConfig" class="fixed inset-0 bg-slate-900/40 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden">
+      <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex justify-between items-center"><h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">⚙️ Personalizar Tela</h2><button id="btnFecharConfig" class="text-slate-400 hover:text-slate-600 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+      <div class="p-5 space-y-4"><p class="text-sm text-slate-500 mb-4">Escolha quais painéis você quer exibir.</p>
+        <div class="flex items-center justify-between"><span class="text-sm font-medium text-slate-700">Cards de Resumo</span><div class="relative inline-block w-12 mr-2"><input type="checkbox" id="cfgResumo" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/><label for="cfgResumo" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label></div></div>
+        <div class="flex items-center justify-between"><span class="text-sm font-medium text-slate-700">Filtro de Margem</span><div class="relative inline-block w-12 mr-2"><input type="checkbox" id="cfgFiltro" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/><label for="cfgFiltro" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label></div></div>
+        <div class="flex items-center justify-between"><span class="text-sm font-medium text-slate-700">Importação/Exportação</span><div class="relative inline-block w-12 mr-2"><input type="checkbox" id="cfgFerramentas" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/><label for="cfgFerramentas" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label></div></div>
+        <div class="flex items-center justify-between"><span class="text-sm font-medium text-slate-700">Gráficos de Performance</span><div class="relative inline-block w-12 mr-2"><input type="checkbox" id="cfgGraficos" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/><label for="cfgGraficos" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label></div></div>
       </div>
-      
-      <div class="p-5 space-y-4">
-        <p class="text-sm text-slate-500 mb-4">Escolha quais painéis você quer exibir no seu dashboard. Suas opções serão salvas.</p>
-        
-        <!-- Toggle: Resumo -->
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-medium text-slate-700">Cards de Resumo</span>
-          <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-            <input type="checkbox" name="toggle" id="cfgResumo" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/>
-            <label for="cfgResumo" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
-          </div>
-        </div>
-
-        <!-- Toggle: Filtro -->
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-medium text-slate-700">Filtro de Margem</span>
-          <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-            <input type="checkbox" name="toggle" id="cfgFiltro" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/>
-            <label for="cfgFiltro" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
-          </div>
-        </div>
-
-        <!-- Toggle: Ferramentas (Import/Export) -->
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-medium text-slate-700">Importação e Exportação</span>
-          <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-            <input type="checkbox" name="toggle" id="cfgFerramentas" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/>
-            <label for="cfgFerramentas" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
-          </div>
-        </div>
-
-        <!-- Toggle: Gráficos -->
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-medium text-slate-700">Gráficos de Performance</span>
-          <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-            <input type="checkbox" name="toggle" id="cfgGraficos" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" checked/>
-            <label for="cfgGraficos" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-slate-50 p-4 border-t border-slate-200">
-        <button id="btnSalvarConfig" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg shadow-sm transition-colors">
-          Concluir
-        </button>
-      </div>
+      <div class="bg-slate-50 p-4 border-t border-slate-200"><button id="btnSalvarConfig" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg shadow-sm transition-colors">Concluir</button></div>
     </div>
   </div>
 
@@ -299,15 +172,8 @@
   let editandoId = null;
   let chartLucro = null, chartPercentual = null;
   
-  // Preferências de Interface
-  let uiConfig = {
-    resumo: true,
-    filtro: true,
-    ferramentas: true,
-    graficos: true
-  };
+  let uiConfig = { resumo: true, filtro: true, ferramentas: true, graficos: true };
 
-  // Elementos DOM
   const nomeInput = document.getElementById('nomeCampanha');
   const precoOriginalInput = document.getElementById('precoOriginal');
   const precoPromocionalInput = document.getElementById('precoPromocional');
@@ -324,51 +190,35 @@
   const tbody = document.getElementById('tbodyCampanhas');
   const margemMinimaLabel = document.getElementById('margemMinimaLabel');
 
-  // Elementos DOM de UI (Secões e Modal)
   const modalConfig = document.getElementById('modalConfig');
   const secFerramentas = document.getElementById('secFerramentas');
   const secFiltro = document.getElementById('secFiltro');
   const secResumo = document.getElementById('secResumo');
   const secGraficos = document.getElementById('secGraficos');
-
   const cfgResumo = document.getElementById('cfgResumo');
   const cfgFiltro = document.getElementById('cfgFiltro');
   const cfgFerramentas = document.getElementById('cfgFerramentas');
   const cfgGraficos = document.getElementById('cfgGraficos');
 
-  // Helpers
   const formatMoney = (val) => `R$ ${val.toFixed(2)}`;
   const formatPercent = (val) => `${val.toFixed(1)}%`;
 
-  // --- Gerenciamento de Interface (Preferências) ---
   function carregarConfigUI() {
     const saved = localStorage.getItem('dashboard_ui_config');
-    if (saved) {
-      try {
-        uiConfig = JSON.parse(saved);
-      } catch (e) {}
-    }
-    
-    // Atualiza os toggles no modal
+    if (saved) try { uiConfig = JSON.parse(saved); } catch(e) {}
     cfgResumo.checked = uiConfig.resumo;
     cfgFiltro.checked = uiConfig.filtro;
     cfgFerramentas.checked = uiConfig.ferramentas;
     cfgGraficos.checked = uiConfig.graficos;
-    
     aplicarConfigUI();
   }
 
   function aplicarConfigUI() {
-    // Alterna classes Tailwind em vez de usar style.display para não quebrar grids/flex
     uiConfig.ferramentas ? secFerramentas.classList.remove('hidden') : secFerramentas.classList.add('hidden');
     uiConfig.filtro ? secFiltro.classList.remove('hidden') : secFiltro.classList.add('hidden');
     uiConfig.resumo ? secResumo.classList.remove('hidden') : secResumo.classList.add('hidden');
     uiConfig.graficos ? secGraficos.classList.remove('hidden') : secGraficos.classList.add('hidden');
-
-    // Se os gráficos foram ativados novamente, força um render para evitar bugs de tamanho no canvas
-    if (uiConfig.graficos) {
-      setTimeout(() => atualizarGraficos(), 50);
-    }
+    if (uiConfig.graficos) setTimeout(() => atualizarGraficos(), 50);
   }
 
   function salvarConfigUI() {
@@ -376,12 +226,9 @@
     uiConfig.filtro = cfgFiltro.checked;
     uiConfig.ferramentas = cfgFerramentas.checked;
     uiConfig.graficos = cfgGraficos.checked;
-    
     localStorage.setItem('dashboard_ui_config', JSON.stringify(uiConfig));
     aplicarConfigUI();
   }
-
-  // --- Lógica Principal do Dashboard ---
 
   function atualizarDescontoPreview() {
     const original = parseFloat(precoOriginalInput.value) || 0;
@@ -398,12 +245,7 @@
     const lucroPercentual = precoPromocional > 0 ? (lucroLiquido / precoPromocional) * 100 : 0;
     const descontoReais = Math.max(0, precoOriginal - precoPromocional);
     const descontoPercentual = precoOriginal > 0 ? (descontoReais / precoOriginal) * 100 : 0;
-    
-    return {
-      nome: nome.trim() || "Sem nome", precoOriginal, precoPromocional, custoProduto,
-      tarifaVenda, custoEnvio, voceRecebe, imposto, lucroLiquido, lucroPercentual,
-      descontoReais, descontoPercentual
-    };
+    return { nome: nome.trim() || "Sem nome", precoOriginal, precoPromocional, custoProduto, tarifaVenda, custoEnvio, voceRecebe, imposto, lucroLiquido, lucroPercentual, descontoReais, descontoPercentual };
   }
 
   function obterDadosFormulario() {
@@ -413,7 +255,6 @@
     const custoProduto = parseFloat(custoProdutoInput.value);
     const tarifaVenda = parseFloat(tarifaVendaInput.value);
     const custoEnvio = parseFloat(custoEnvioInput.value);
-    
     if (isNaN(precoOriginal) || precoOriginal < 0) { alert("Preço original inválido."); return null; }
     if (isNaN(precoPromocional) || precoPromocional < 0) { alert("Preço promocional inválido"); return null; }
     if (isNaN(custoProduto) || custoProduto < 0) { alert("Custo do produto inválido"); return null; }
@@ -425,12 +266,7 @@
   function salvarCampanha() {
     const dados = obterDadosFormulario();
     if (!dados) return;
-    
-    const novosCalculos = calcularDerivados(
-      dados.nome, dados.precoOriginal, dados.precoPromocional,
-      dados.custoProduto, dados.tarifaVenda, dados.custoEnvio
-    );
-    
+    const novosCalculos = calcularDerivados(dados.nome, dados.precoOriginal, dados.precoPromocional, dados.custoProduto, dados.tarifaVenda, dados.custoEnvio);
     if (editandoId !== null) {
       const index = campanhas.findIndex(c => c.id === editandoId);
       if (index !== -1) campanhas[index] = { ...novosCalculos, id: editandoId };
@@ -441,7 +277,6 @@
       const newId = Date.now() + Math.random() * 1000;
       campanhas.push({ ...novosCalculos, id: newId });
     }
-    
     localStorage.setItem('campanhas_ultimate', JSON.stringify(campanhas));
     limparFormulario();
     atualizarTabelaEGraficos();
@@ -482,117 +317,61 @@
     const margemMin = parseFloat(margemMinimaInput.value) || 14;
     const apenasAbaixo = filtroCheck.checked;
     let lista = [...campanhas];
-    if (apenasAbaixo && uiConfig.filtro) {
-      lista = lista.filter(c => c.lucroPercentual < margemMin);
-    }
+    if (apenasAbaixo && uiConfig.filtro) lista = lista.filter(c => c.lucroPercentual < margemMin);
     return { lista, margemMin };
   }
 
   function atualizarTabela() {
     const { lista, margemMin } = obterCampanhasFiltradas();
     tbody.innerHTML = '';
-    
-    if (lista.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="9" class="text-center py-10 text-slate-500">📭 Nenhuma campanha encontrada.</td></tr>`;
-      return;
-    }
-    
+    if (lista.length === 0) { tbody.innerHTML = `<tr><td colspan="9" class="text-center py-10 text-slate-500">📭 Nenhuma campanha encontrada.</td></tr>`; return; }
     lista.forEach(camp => {
       const isAbaixo = camp.lucroPercentual < margemMin;
       const statusClass = isAbaixo ? 'text-red-700 bg-red-100 px-3 py-1 rounded-full font-bold text-xs inline-block' : 'text-green-600 font-bold';
       const descontoStr = `<span class="text-xs text-slate-500 block">${formatPercent(camp.descontoPercentual)}</span> ${formatMoney(camp.descontoReais)}`;
-      
       const tr = document.createElement('tr');
       tr.className = "hover:bg-slate-50 transition-colors";
-      tr.innerHTML = `
-        <td class="px-4 py-3 font-medium text-slate-800">${escapeHtml(camp.nome)}</td>
-        <td class="px-4 py-3 text-right">${formatMoney(camp.precoOriginal)}</td>
-        <td class="px-4 py-3 text-right font-medium text-blue-600">${formatMoney(camp.precoPromocional)}</td>
-        <td class="px-4 py-3 text-center bg-slate-50/50">${descontoStr}</td>
-        <td class="px-4 py-3 text-right">${formatMoney(camp.voceRecebe)}</td>
-        <td class="px-4 py-3 text-right text-slate-500">${formatMoney(camp.imposto)}</td>
-        <td class="px-4 py-3 text-right font-semibold">${formatMoney(camp.lucroLiquido)}</td>
-        <td class="px-4 py-3 text-center"><span class="${statusClass}">${formatPercent(camp.lucroPercentual)}</span></td>
-        <td class="px-4 py-3 text-center whitespace-nowrap">
-          <button class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold py-1.5 px-3 rounded shadow-sm mr-1" onclick="editarCampanha(${camp.id})">Editar</button>
-          <button class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold py-1.5 px-3 rounded shadow-sm" onclick="excluirCampanha(${camp.id})">Excluir</button>
-        </td>
-      `;
+      tr.innerHTML = `<td class="px-4 py-3 font-medium text-slate-800">${escapeHtml(camp.nome)}</td><td class="px-4 py-3 text-right">${formatMoney(camp.precoOriginal)}</td><td class="px-4 py-3 text-right font-medium text-blue-600">${formatMoney(camp.precoPromocional)}</td><td class="px-4 py-3 text-center bg-slate-50/50">${descontoStr}</td><td class="px-4 py-3 text-right">${formatMoney(camp.voceRecebe)}</td><td class="px-4 py-3 text-right text-slate-500">${formatMoney(camp.imposto)}</td><td class="px-4 py-3 text-right font-semibold">${formatMoney(camp.lucroLiquido)}</td><td class="px-4 py-3 text-center"><span class="${statusClass}">${formatPercent(camp.lucroPercentual)}</span></td><td class="px-4 py-3 text-center whitespace-nowrap"><button class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold py-1.5 px-3 rounded shadow-sm mr-1" onclick="editarCampanha(${camp.id})">Editar</button><button class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold py-1.5 px-3 rounded shadow-sm" onclick="excluirCampanha(${camp.id})">Excluir</button></td>`;
       tbody.appendChild(tr);
     });
   }
   
   function atualizarResumo() {
-    if(!uiConfig.resumo) return; // Não perde processamento se estiver oculto
+    if(!uiConfig.resumo) return;
     const { lista } = obterCampanhasFiltradas();
-    if (!lista.length) {
-      document.getElementById('lucroTotal').innerText = 'R$ 0,00';
-      document.getElementById('lucroMedio').innerText = 'R$ 0,00';
-      document.getElementById('melhorCampanha').innerText = '—';
-      return;
-    }
+    if (!lista.length) { document.getElementById('lucroTotal').innerText = 'R$ 0,00'; document.getElementById('lucroMedio').innerText = 'R$ 0,00'; document.getElementById('melhorCampanha').innerText = '—'; return; }
     const totalLucro = lista.reduce((acc, c) => acc + c.lucroLiquido, 0);
     const mediaLucro = totalLucro / lista.length;
     const melhor = lista.reduce((prev, curr) => (curr.lucroLiquido > prev.lucroLiquido ? curr : prev), lista[0]);
-    
     document.getElementById('lucroTotal').innerText = formatMoney(totalLucro);
     document.getElementById('lucroMedio').innerText = formatMoney(mediaLucro);
     document.getElementById('melhorCampanha').innerText = melhor.nome;
   }
 
   function atualizarGraficos() {
-    if(!uiConfig.graficos) return; // Não renderiza se estiver oculto
+    if(!uiConfig.graficos) return;
     const { lista, margemMin } = obterCampanhasFiltradas();
-    
-    if (!lista.length) {
-      if (chartLucro) { chartLucro.destroy(); chartLucro = null; }
-      if (chartPercentual) { chartPercentual.destroy(); chartPercentual = null; }
-      return;
-    }
-    
+    if (!lista.length) { if (chartLucro) { chartLucro.destroy(); chartLucro = null; } if (chartPercentual) { chartPercentual.destroy(); chartPercentual = null; } return; }
     const labels = lista.map(c => c.nome.length > 18 ? c.nome.slice(0,16)+'…' : c.nome);
     const lucros = lista.map(c => c.lucroLiquido);
     const percentuais = lista.map(c => c.lucroPercentual);
     const bgColors = lista.map(c => c.lucroPercentual < margemMin ? '#ef4444' : '#22c55e');
-    
     if (chartLucro) chartLucro.destroy();
-    chartLucro = new Chart(document.getElementById('lucroChart').getContext('2d'), {
-      type: 'bar',
-      data: { labels, datasets: [{ label: 'Lucro Líquido (R$)', data: lucros, backgroundColor: bgColors, borderRadius: 6 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } }
-    });
-    
+    chartLucro = new Chart(document.getElementById('lucroChart').getContext('2d'), { type: 'bar', data: { labels, datasets: [{ label: 'Lucro Líquido (R$)', data: lucros, backgroundColor: bgColors, borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } } });
     if (chartPercentual) chartPercentual.destroy();
-    chartPercentual = new Chart(document.getElementById('percentualChart').getContext('2d'), {
-      type: 'bar',
-      data: { labels, datasets: [{ label: 'Margem %', data: percentuais, backgroundColor: bgColors, borderRadius: 6 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(1)}%` } } }, scales: { y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } }
-    });
+    chartPercentual = new Chart(document.getElementById('percentualChart').getContext('2d'), { type: 'bar', data: { labels, datasets: [{ label: 'Margem %', data: percentuais, backgroundColor: bgColors, borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(1)}%` } } }, scales: { y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } } });
   }
 
-  function atualizarTabelaEGraficos() {
-    atualizarTabela();
-    atualizarResumo();
-    atualizarGraficos();
-  }
+  function atualizarTabelaEGraficos() { atualizarTabela(); atualizarResumo(); atualizarGraficos(); }
 
   function carregarLocalStorage() {
     const dados = localStorage.getItem('campanhas_ultimate');
     if (dados) {
-      try {
-        campanhas = JSON.parse(dados).map(camp => {
-          if (camp.descontoReais === undefined) return { ...camp, ...calcularDerivados(camp.nome, camp.precoOriginal, camp.precoPromocional, camp.custoProduto, camp.tarifaVenda, camp.custoEnvio) };
-          return camp;
-        });
-      } catch(e) { campanhas = []; }
-    } else {
-      campanhas = [{ ...calcularDerivados("Black Friday Pro", 899.00, 698.40, 504.00, 55.22, 91.15), id: 1001 }];
-      localStorage.setItem('campanhas_ultimate', JSON.stringify(campanhas));
-    }
+      try { campanhas = JSON.parse(dados).map(camp => { if (camp.descontoReais === undefined) return { ...camp, ...calcularDerivados(camp.nome, camp.precoOriginal, camp.precoPromocional, camp.custoProduto, camp.tarifaVenda, camp.custoEnvio) }; return camp; }); } catch(e) { campanhas = []; }
+    } else { campanhas = [{ ...calcularDerivados("Black Friday Pro", 899.00, 698.40, 504.00, 55.22, 91.15), id: 1001 }]; localStorage.setItem('campanhas_ultimate', JSON.stringify(campanhas)); }
     atualizarTabelaEGraficos();
   }
 
-  // --- Importação / Exportação CSV ---
   function exportarCSV() {
     if (!campanhas.length) { alert("Nenhuma campanha."); return; }
     const headers = ["ID", "Nome", "PrecoOriginal", "PrecoPromocional", "CustoProduto", "TarifaVenda", "CustoEnvio", "VoceRecebe", "Imposto8%", "LucroLiquido", "LucroPercentual", "DescontoReais", "DescontoPercentual"];
@@ -639,31 +418,22 @@
     margemMinimaInput.addEventListener('input', () => { margemMinimaLabel.innerText = margemMinimaInput.value; atualizarTabelaEGraficos(); });
     precoOriginalInput.addEventListener('input', atualizarDescontoPreview);
     precoPromocionalInput.addEventListener('input', atualizarDescontoPreview);
-
-    // Eventos do Modal de Configuração
     document.getElementById('btnAbrirConfig').addEventListener('click', () => modalConfig.classList.remove('hidden'));
     document.getElementById('btnFecharConfig').addEventListener('click', () => modalConfig.classList.add('hidden'));
-    document.getElementById('btnSalvarConfig').addEventListener('click', () => {
-      salvarConfigUI();
-      modalConfig.classList.add('hidden');
-    });
-    
-    // Ocultar modal clicando fora dele
-    modalConfig.addEventListener('click', (e) => {
-      if (e.target === modalConfig) modalConfig.classList.add('hidden');
-    });
+    document.getElementById('btnSalvarConfig').addEventListener('click', () => { salvarConfigUI(); modalConfig.classList.add('hidden'); });
+    modalConfig.addEventListener('click', (e) => { if (e.target === modalConfig) modalConfig.classList.add('hidden'); });
   }
 
   function escapeHtml(str) { return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
 
-  function init() {
-    carregarConfigUI();
-    bindEvents();
-    carregarLocalStorage();
-    atualizarDescontoPreview();
-    margemMinimaLabel.innerText = margemMinimaInput.value;
+  // Registro do Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then(reg => console.log('Service Worker registrado com sucesso!', reg)).catch(err => console.error('Falha ao registrar SW:', err));
+    });
   }
-  
+
+  function init() { carregarConfigUI(); bindEvents(); carregarLocalStorage(); atualizarDescontoPreview(); margemMinimaLabel.innerText = margemMinimaInput.value; }
   init();
 </script>
 </body>
