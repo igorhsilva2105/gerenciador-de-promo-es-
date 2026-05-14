@@ -4,6 +4,7 @@
   "display": "standalone",
   "name": "Gerenciador-de-promoção",
   "orientation": "any",
+  "start_url": "/gerenciador-de-promo-es-/",
   "scope": "/gerenciador-de-promo-es-/",
   "short_name": "Gerenciador-de-promoção",
   "theme_color": "#eb2546",
